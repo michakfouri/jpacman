@@ -4,6 +4,7 @@ import java.util.Map;
 
 import nl.tudelft.jpacman.board.Direction;
 import nl.tudelft.jpacman.board.Unit;
+import nl.tudelft.jpacman.game.Game;
 import nl.tudelft.jpacman.sprite.AnimatedSprite;
 import nl.tudelft.jpacman.sprite.Sprite;
 
@@ -18,6 +19,11 @@ public class Player extends Unit {
      * The amount of points accumulated by this player.
      */
     private int score;
+
+    /**
+     * The amount of lives this player has.
+     */
+    private int lives;
 
     /**
      * The animations for every direction.
@@ -50,6 +56,7 @@ public class Player extends Unit {
     protected Player(Map<Direction, Sprite> spriteMap, AnimatedSprite deathAnimation) {
         this.score = 0;
         this.alive = true;
+        this.lives = 3;
         this.sprites = spriteMap;
         this.deathSprite = deathAnimation;
         deathSprite.setAnimating(false);
@@ -64,10 +71,19 @@ public class Player extends Unit {
         return alive;
     }
 
+    public int setLives(){
+        if(lives > 0){
+            System.out.println(lives);
+            lives = lives -1;
+            System.out.println(lives);
+        }
+        return lives;
+    }
+
     /**
      * Sets whether this player is alive or not.
      *
-     * If the player comes back alive, the {@link killer} will be reset.
+     * If the player comes back alive, the killer will be reset.
      *
      * @param isAlive
      *            <code>true</code> iff this player is alive.
@@ -80,6 +96,7 @@ public class Player extends Unit {
         if (!isAlive) {
             deathSprite.restart();
         }
+
         this.alive = isAlive;
     }
 
